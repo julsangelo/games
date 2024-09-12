@@ -1,0 +1,101 @@
+@font-face {
+    font-family: sans-serif;
+    src: url(../assets/font/nunitoRegular.ttf);
+}
+$primary: #ED9121;
+$secondary: #f9fafb;
+$gray-300: #d1d5db;
+$gray-900: #111827;
+$red: #F01E2C;
+$green: #56a120;
+
+body {
+    margin: 0;
+    font-family: 'sans-serif', sans-serif;
+}
+
+.editBackground {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $secondary;
+    overflow: hidden;
+}
+
+.editContainer {
+    height: fit-content;
+    width: 310px;
+    background-color: white;
+    padding: 28px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); 
+}
+
+.editTitle {
+    font-size: 24px;
+    font-weight:700;
+    color: $primary;
+    margin-top: 0;
+}
+
+.editInputTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 5px 0 5px 0;
+}
+
+.editInput {
+    background-color: $secondary;
+    border-width: 1px;
+    color: $gray-900;
+    border-radius: 8px;
+    padding: 8px 12px 8px 12px;
+    font-size: 16px;
+    display: block;
+    margin: 10px 0 10px 0;
+    width: 92%;
+
+    &:focus {
+        outline-color: $primary;
+    }
+}
+
+.editButton {
+    background-color: $primary;
+    padding: 8px;
+    font-weight: 600;
+    color: white;
+    border-radius: 8px;
+    border-color: $primary;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    box-shadow: none;
+    border-style: solid;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.editCancel {
+    text-align: center;
+}
+
+.editCancelButton {
+    color: $primary;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.editErrorMessage {
+    color: red;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
