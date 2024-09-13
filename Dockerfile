@@ -38,7 +38,6 @@ RUN apk update && \
 COPY ./supervisor/supervisor-npm.conf /opt/docker/etc/supervisor.d/
 COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
 RUN chmod +x /opt/docker/entrypoint/development.sh
-RUN chmod 755 /var/log/supervisor
 
 ENTRYPOINT [ "/opt/docker/entrypoint/development.sh" ]
 
