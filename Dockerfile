@@ -20,9 +20,23 @@ COPY ./supervisor/supervisor-npm.conf /opt/docker/etc/supervisor.d/
 COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
 RUN chmod +x /opt/docker/entrypoint/development.sh
 
+EXPOSE 8080
+
 ENTRYPOINT [ "/opt/docker/entrypoint/development.sh" ]
 
 #Production Stage
 FROM base AS production
 
 COPY . .
+
+RUN apk update && \
+    apk add --no-cache \
+    composer \
+    nodejs \
+    npm
+
+COPY ./supervisor/supervisor-npm.conf /opt/docker/etc/supervisor.d/
+COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
+RUN chmod +x /opt/docker/entrypoint/development.sh
+
+EXPOSE 8080
