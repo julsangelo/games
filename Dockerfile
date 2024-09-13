@@ -18,7 +18,7 @@ RUN apk update && \
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 # Build assets for production
 RUN npm install && npm run production
