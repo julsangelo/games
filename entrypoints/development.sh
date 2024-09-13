@@ -11,5 +11,6 @@ if [ ! -d "./vendor" ]; then
 fi
 
 chown -R 1000:www-data 0:www-data /var/www/html ./vendor ./node_modules
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisor.conf
 
 /entrypoint supervisord
