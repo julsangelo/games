@@ -39,7 +39,7 @@ RUN apk update && \
     npm \
     supervisor
 
-COPY ./entrypoints/production.sh /opt/docker/entrypoint/development.sh
+COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
 RUN chmod +x /opt/docker/entrypoint/development.sh
 
 EXPOSE 8080
