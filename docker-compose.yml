@@ -1,52 +1,35 @@
+version: '3.8'
+
 services:
-  laravel:
-    image: games-laravel-dev
-    # image: games-laravel-prod
-    container_name: games_laravel
-    volumes:
-      - ./:/var/www/html
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8000:80"
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      REDIS_HOST: redis
     depends_on:
-      - database
+      - mysql
       - redis
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - DB_HOST=database
-      - DB_PORT=3306
-      - DB_DATABASE=games_database
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
-    networks:
-      - network
-
-  database:
-    image: mysql:8.0
-    container_name: games_database
-    ports:
-      - "5000:3306"
-    environment:
-      MYSQL_DATABASE: game_website
-      MYSQL_ROOT_PASSWORD: root
     volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - network
-
+      - .:/var/www/html
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
   redis:
-    image: redis:latest
-    container_name: games_redis
+    image: redis:alpine
     ports:
       - "6379:6379"
-    command: [ "redis-server" ]
-    networks:
-      - network
-
-volumes:
-  mysql-data:
-
-
-networks:
-  network:
-    driver: bridge

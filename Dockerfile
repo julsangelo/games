@@ -1,44 +1,30 @@
+# Base image for PHP and Nginx
 FROM webdevops/php-nginx:8.2-alpine AS base
 
+# Set working directory and environment variables
 WORKDIR /var/www/html
-
 ENV WEB_DOCUMENT_ROOT=/var/www/html/public
 ENV WEB_DOCUMENT_INDEX=index.php
-
 ENV TZ=Asia/Singapore
 
-#Development Stage
-FROM base AS development
-
+# Install dependencies
 RUN apk update && \
     apk add --no-cache \
     composer \
     nodejs \
     npm
 
-COPY ./supervisor/supervisor-npm.conf /opt/docker/etc/supervisor.d/
-COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
-RUN chmod +x /opt/docker/entrypoint/development.sh
-
-EXPOSE 8080
-
-ENTRYPOINT [ "/opt/docker/entrypoint/development.sh" ]
-
-#Production Stage
-FROM base AS production
-
+# Copy the application code into the container
 COPY . .
 
-RUN apk update && \
-    apk add --no-cache \
-    composer \
-    nodejs \
-    npm
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-COPY ./supervisor/supervisor-npm.conf /opt/docker/etc/supervisor.d/
-COPY ./entrypoints/development.sh /opt/docker/entrypoint/development.sh
-RUN chmod +x /opt/docker/entrypoint/development.sh
+# Build assets for production
+RUN npm install && npm run production
 
-ENTRYPOINT [ "/opt/docker/entrypoint/development.sh" ]
-
+# Expose the necessary port for Nginx
 EXPOSE 8080
+
+# Set entrypoint
+CMD ["supervisord", "-c", "/opt/docker/etc/supervisor.conf"]
