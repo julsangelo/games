@@ -21,7 +21,7 @@ COPY . .
 RUN composer install
 
 # Build assets for production
-RUN npm install && npm run production
+RUN npm install && npm run prod
 
 # Expose the necessary port for Nginx
 EXPOSE 8080
